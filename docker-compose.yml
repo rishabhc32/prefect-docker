@@ -18,12 +18,11 @@ services:
       - prefect-network
 
   prefect-server:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: prefect-docker:latest
     ports:
       - "4200:4200"
     environment:
+      - PREFECT_SERVER_API_HOST=0.0.0.0
       - PREFECT_API_DATABASE_CONNECTION_URL=postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
     command: prefect server start
     healthcheck:
@@ -39,9 +38,7 @@ services:
       - prefect-network
 
   prefect-flow-runner:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: prefect-docker:latest
     environment:
       - PREFECT_API_URL=http://prefect-server:4200/api
     depends_on:

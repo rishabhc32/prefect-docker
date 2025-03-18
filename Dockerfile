@@ -6,11 +6,12 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1 \
     UV_COMPILE_BYTECODE=1 \
     PATH="/app/.venv/bin:$PATH" \
+    PREFECT_HOME="/app/.prefect" \
     PC_DEPLOYMENT_ENVIRONMENT=PRODUCTION
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv
