@@ -1,5 +1,7 @@
 # prefect-docker
 
+A sample project to run Prefect 3 with Docker Compose.
+
 ## Building the Docker Image
 
 To build the Docker image:
