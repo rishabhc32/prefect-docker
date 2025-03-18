@@ -14,6 +14,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
     networks:
       - prefect-network
 
@@ -34,6 +35,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    restart: unless-stopped
     networks:
       - prefect-network
 
@@ -41,10 +43,11 @@ services:
     image: prefect-docker:latest
     environment:
       - PREFECT_API_URL=http://prefect-server:4200/api
+    command: python web/flows/serve_two_flows.py
     depends_on:
       prefect-server:
         condition: service_healthy
-    command: python web/flows/serve_two_flows.py
+    restart: unless-stopped
     networks:
       - prefect-network
 
